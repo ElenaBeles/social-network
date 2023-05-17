@@ -3,16 +3,15 @@ import {ConfigModule, ConfigService} from "@nestjs/config";
 import {TypeOrmModule} from "@nestjs/typeorm";
 
 import { PrismaModule } from './prisma/prisma.module';
-import { FriendsModule } from './friends/friends.module';
 import { PostsModule } from './posts/posts.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { ProfilesModule } from './profiles/profiles.module';
+
+import {PostEntity} from "@/posts/entities/post.entity";
+import {UserEntity} from "@/users/entities/user.entity";
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import {PostEntity} from "@/posts/entities/post.entity";
-import {UserEntity} from "@/users/entities/user.entity";
 
 @Module({
   imports: [
@@ -33,8 +32,6 @@ import {UserEntity} from "@/users/entities/user.entity";
           })
       }),
       PostsModule,
-      FriendsModule,
-      ProfilesModule,
       UsersModule,
       PrismaModule,
       AuthModule
