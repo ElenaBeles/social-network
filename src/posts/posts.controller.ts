@@ -8,7 +8,10 @@ export class PostsController {
 
     @Get()
     getAll () {
-        return this.postsService.getAll();
+       // return this.postsService.getAll();
+
+
+        return ['1', '2', '3'];
     }
 
     @Get(':id')
