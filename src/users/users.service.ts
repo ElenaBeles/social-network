@@ -11,12 +11,6 @@ export class UsersService {
   constructor(private prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
-    const userExist = this.prisma.user.findFirst({where: {email: createUserDto.email}});
-
-    if(!!userExist) {
-      throw new ReferenceError('User already exist');
-    }
-
     const hashPassword = await bcrypt.hash(
         createUserDto.password,
         roundsOfHashing,
