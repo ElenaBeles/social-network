@@ -1,33 +1,36 @@
-import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post} from '@nestjs/common';
-import {CreatePostDto} from "@/posts/dto/create-post.dto";
-import {PostsService} from "@/posts/posts.service";
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {ApiTags} from "@nestjs/swagger";
+import { PostsService } from './posts.service';
+import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Controller('posts')
+@ApiTags('posts')
 export class PostsController {
-    constructor(private readonly postsService: PostsService) {}
+  constructor(private readonly postsService: PostsService) {}
 
-    @Get()
-    getAll () {
-       // return this.postsService.getAll();
+  @Post()
+  create(@Body() createPostDto: CreatePostDto, @Body() userId: number) {
+    return this.postsService.create(createPostDto, userId);
+  }
 
+  @Get(':authorId')
+  findAll(@Param('authorId') id: string) {
+    return this.postsService.findAll(+id);
+  }
 
-        return ['1', '2', '3'];
-    }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.postsService.findOne(+id);
+  }
 
-    @Get(':id')
-    getById (@Param(':id') id: string) {
-        return this.postsService.getById(id);
-    }
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+    return this.postsService.update(+id, updatePostDto);
+  }
 
-    @Post()
-    @HttpCode(HttpStatus.CREATED)
-    create(@Body() entity: CreatePostDto) {
-        this.postsService.create(entity);
-    }
-
-    @Delete()
-    delete (@Param(':id') id: string) {
-        console.log('delete')
-        return [];
-    }
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.postsService.remove(+id);
+  }
 }

@@ -1,11 +1,16 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Post} from "@prisma/client";
+import {ApiProperty} from "@nestjs/swagger";
 
-@Entity()
-export class PostEntity {
-    @PrimaryGeneratedColumn()
-    id: number
+export class PostEntity implements Post {
+    @ApiProperty()
+    id: number;
 
-    @Column({nullable: false})
-    description: string
+    @ApiProperty()
+    text: string;
+
+    @ApiProperty()
+    createdAt: Date;
+
+    @ApiProperty({ required: false, nullable: true })
+    authorId: number | null;
 }
-
